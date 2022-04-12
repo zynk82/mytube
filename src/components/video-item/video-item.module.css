@@ -1,0 +1,53 @@
+.video {
+    display: flex;
+    align-items: center;
+    width: 50%;
+    /*border: 0.05em solid lightgray;*/
+    cursor: pointer;
+    transition: 250ms ease-in-out;
+    padding: 0.2em;
+}
+
+.video:hover {
+    transform: scale(1.01);
+}
+
+.thumbnail {
+    width: 320px;
+    display: block;
+    height: 180px;
+    margin-right: 1em;
+}
+
+.snippet {
+    /*width: 640px;*/
+    display: flex;
+    flex-direction: column;
+}
+
+.description {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    width: 100%;
+    height: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0.5em 0;
+}
+
+.title {
+    padding: 0.5em 0;
+
+}
+
+.channel {
+    padding: 0.5em 0;
+    font-size: 0.9rem;
+}
+
+.kind {
+    padding: 0.5em 0;
+    font-size: 0.4rem;
+}
