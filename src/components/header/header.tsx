@@ -26,6 +26,8 @@ const Header = ({onSearch, onHomeClick}: HeaderProps) => {
         }
     };
 
+    console.log(`header is rendered.`);
+
     return (
         <header>
             <img className={styles.logo} onClick={onHomeClick} src='/youtube-logo.png'/>
@@ -44,4 +46,9 @@ const Header = ({onSearch, onHomeClick}: HeaderProps) => {
     );
 };
 
-export default Header;
+export default React.memo(Header
+    ,
+    (prevProps, nextProps) => {
+        return prevProps.onSearch === nextProps.onSearch && prevProps.onHomeClick === nextProps.onHomeClick;
+    }
+);

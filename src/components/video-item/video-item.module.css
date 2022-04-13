@@ -1,11 +1,23 @@
 .video {
     display: flex;
     align-items: center;
-    width: 50%;
-    /*border: 0.05em solid lightgray;*/
     cursor: pointer;
     transition: 250ms ease-in-out;
     padding: 0.2em;
+}
+
+.side {
+    width: 50%;
+}
+
+@media screen and (max-width: 70rem) {
+    .side {
+        width: 100%;
+    }
+}
+
+.main {
+    width: 100%;
 }
 
 .video:hover {
@@ -13,10 +25,18 @@
 }
 
 .thumbnail {
-    width: 320px;
     display: block;
-    height: 180px;
     margin-right: 1em;
+}
+
+.thumbnail_default {
+    width: 320px;
+    height: 180px;
+}
+
+.thumbnail_small {
+    width: 120px;
+    height: 90px;
 }
 
 .snippet {

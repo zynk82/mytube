@@ -1,45 +1,52 @@
 import {QueryType, VideoData} from "../data/types";
-import axios, {AxiosInstance, AxiosRequestConfig} from "axios";
 
+type MyRequest = {
+    method: string;
+    redirect?: RequestRedirect;
+    // mode: RequestMode;
+    // cache: RequestCache;
+    // credentials: RequestCredentials;
+    // destination: RequestDestination;
+    // headers: Headers;
+    // integrity: string;
+    // keepalive: boolean;
+    // referrer: string;
+    // referrerPolicy: ReferrerPolicy;
+    // signal: AbortSignal;
+    // url: string;
+}
 
-class YoutubeService {
+class YoutubeServiceFetch {
     private apiKey: string = '';
     private TAG: string = '[YOUTUBE_SERVICE]';
 
     private baseUrl: string = 'https://youtube.googleapis.com/youtube/v3';
     private querySize: string = '10';
 
-    private client: AxiosInstance;
-
     constructor(apiKey: string) {
-        this.client = axios.create(
-            {
-                baseURL: this.baseUrl,
-                params: {
-                    key: apiKey,
-                    part: 'snippet',
-                    maxResults: this.querySize
-                },
-            }
-        );
+        this.apiKey = apiKey;
+    }
+
+    getPopularUrl = (): string => {
+        return `${this.baseUrl}/videos?part=snippet&chart=mostPopular&maxResults=${this.querySize}&key=${this.apiKey}`;
+    }
+
+    getKeywordUrl = (keyword: string): string => {
+        return `${this.baseUrl}/search?part=snippet&maxResults=${this.querySize}&q=${keyword}&key=${this.apiKey}`;
     }
 
     public query = async (type: QueryType, keyword?: string): Promise<VideoData[]> => {
-        let videoDatas: VideoData[] = [];
+        const requestOptions: MyRequest = {
+            method: 'GET',
+            redirect: 'follow',
+        };
 
-        let axiosConfig: AxiosRequestConfig = {};
+        let videoDatas: VideoData[] = [];
 
         let url;
 
         if ('popular' === type) {
-            url = '/videos';
-
-            axiosConfig = {
-                ...axiosConfig,
-                params: {
-                    chart: 'mostPopular',
-                }
-            };
+            url = this.getPopularUrl();
 
         } else if ('keyword' === type) {
             if (!keyword) {
@@ -47,14 +54,7 @@ class YoutubeService {
                 return Promise.reject(`${this.TAG}keyword '${keyword}' is not valid.`);
             }
 
-            url = '/search';
-
-            axiosConfig = {
-                ...axiosConfig,
-                params: {
-                    q: 'mostPopular', keyword
-                }
-            };
+            url = this.getKeywordUrl(keyword);
 
         } else {
             return Promise.resolve(videoDatas);
@@ -63,12 +63,13 @@ class YoutubeService {
 
         console.log(`${this.TAG}query called. type : ${type}, url : ${url} ,keyword : ${keyword}`);
 
-        await this.client.get(url, axiosConfig)
+        await fetch(url, requestOptions)
             .then(response => {
-                console.log(`${this.TAG}axios status : ${response.status} result : `);
-                console.dir(response);
+                return response.json();
 
-                const items = response.data.items;
+            })
+            .then(result => {
+                const items = result.items;
 
                 for (const item of items) {
                     const snippet = item.snippet;
@@ -117,7 +118,7 @@ class YoutubeService {
                     });
                 }
 
-                console.log(`${this.TAG}axios success : ${type}, data : `);
+                console.log(`${this.TAG}success : ${type}, data : `);
                 console.dir(videoDatas);
 
                 return Promise.resolve(videoDatas);
@@ -134,4 +135,4 @@ class YoutubeService {
     }
 }
 
-export default YoutubeService;
+export default YoutubeServiceFetch;

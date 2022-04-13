@@ -1,0 +1,23 @@
+.container {
+    height: 100%;
+
+}
+
+.information {
+    padding: 1em;
+}
+
+.title {
+    padding: 0.5em;
+}
+
+.channel {
+    padding: 1em;
+}
+
+.description {
+    padding: 1em;
+    /*white-space: pre-wrap;*/
+    white-space: pre-line;
+}
+
