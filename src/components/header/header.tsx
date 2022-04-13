@@ -1,7 +1,5 @@
 import React, {MouseEvent, SyntheticEvent, useRef} from 'react';
 import styles from './header.module.css';
-import search from '../../assets/search-icon.png';
-import youtube from '../../assets/youtube-logo.png';
 
 export type HeaderProps = {
     onSearch: (word: string) => void;
@@ -30,18 +28,17 @@ const Header = ({onSearch, onHomeClick}: HeaderProps) => {
 
     return (
         <header>
-            <img className={styles.logo}
-                 onClick={onHomeClick}
-                 src={youtube}/>
+            <img className={styles.logo} onClick={onHomeClick} src='/youtube-logo.png'/>
 
-            <form ref={formRef} className={styles.inputform} onSubmit={onSubmit}>
-                <div className={styles.formcontainer}>
-                    <input ref={textRef} className={styles.inputtext}
+            <form ref={formRef} className={styles.input_form} onSubmit={onSubmit}>
+                <div className={styles.form_container}>
+                    <input ref={textRef} className={styles.input_text}
                            type='text' placeholder='Search...'/>
                     <input type='button' className={styles.clear} onClick={onClearClick} value='X'/>
                 </div>
-                <input type='image' className={styles.search}
-                       src={search}/>
+                <button className={styles.submit_button} type='submit'>
+                    <img className={styles.search} src='/search-icon.png'/>
+                </button>
             </form>
         </header>
     );

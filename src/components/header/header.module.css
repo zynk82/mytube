@@ -5,17 +5,16 @@ header {
     align-items: center;
     height: 4rem;
     padding: 0 1em;
-    cursor: pointer;
 }
 
-.inputform {
+.input_form {
     display: flex;
     align-items: center;
     width: 100%;
     height: 100%;
 }
 
-.formcontainer {
+.form_container {
     width: 100%;
     display: flex;
     align-items: center;
@@ -27,19 +26,20 @@ header {
 .logo {
     width: 3rem;
     height: 3rem;
+    cursor: pointer;
 }
 
-.inputtext, .inputtext:focus {
+.input_text, .input_text:focus {
     border: none;
     background: transparent;
     font-size: 1.2rem;
-    width: 100%;
+    flex-basis: 100%;
     height: 3rem;
     padding: 0 0.5em;
+    outline: 0;
 }
 
 .clear {
-
     margin-right: 0.3em;
     background: none;
     border: none;
@@ -50,10 +50,16 @@ header {
     height: 100%;
 }
 
+.submit_button {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
 .search {
     object-fit: contain;
-    width: 6rem;
+    width: 4rem;
     height: 3rem;
-    padding: 0.4em 0.2em;
+    padding: 0.6em 0.6em;
     border-radius: 0.1em;
 }

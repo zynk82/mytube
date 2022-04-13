@@ -1,15 +1,20 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import './app.css';
+import './app.module.css';
 import VideoList from "./components/video-list/video-list";
 import {VideoListData} from "./data/types";
 import Header from "./components/header/header";
-import {query} from "./service/youtube-service";
+import styles from './app.module.css';
+import YoutubeService from './service/youtube-service';
 
-function App() {
+type AppProps = {
+    youtubeService: YoutubeService;
+}
+
+function App({youtubeService}: AppProps) {
     const [videoList, setVideoList] = useState<VideoListData>({items: []});
 
     const queryPopular = () => {
-        query("popular").then((videoDatas) => {
+        youtubeService.query("popular").then((videoDatas) => {
             setVideoList({items: videoDatas});
         }).catch((reason) => {
             alert(reason);
@@ -17,7 +22,7 @@ function App() {
     };
 
     const queryKeyword = (word: string) => {
-        query("keyword", word).then((videoDatas) => {
+        youtubeService.query("keyword", word).then((videoDatas) => {
             setVideoList({items: videoDatas});
         }).catch((reason) => {
             alert(reason);
@@ -38,10 +43,10 @@ function App() {
     }, []);
 
     return (
-        <>
+        <main className={styles.main}>
             <Header onSearch={onSearch} onHomeClick={onHomeClick}/>
             <VideoList videoList={videoList}/>
-        </>
+        </main>
     );
 }
 
